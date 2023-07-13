@@ -37,16 +37,26 @@
         })
         window.addEventListener('mousemove',(e)=>{
             if(isclicked){
+                const top = e.clientY < 0;
+                const light = e.clientX < 0;
+                const bottom = e.clientY > window.innerHeight;
+                const right= e.clientX > window.innerWidth;
+
                 moveX = e.clientX - clickX;
                 moveY = e.clientY - clickY;
                 div.style.transform = `translate(${moveX + endX}px,${moveY + endY}px)`;
+                if(top||light||bottom||right){
+                    isclicked = false;
+                    div.style.transform = `translate(${endX}px,${endY}px)`;
+                }
             }
         })
         div.addEventListener('mouseup',()=>{
-            isclicked = false;
-            endX = moveX + endX;
-            endY = moveY + endY;
-            console.log(endX, endY);
+                if(isclicked){
+                isclicked = false;
+                endX = moveX + endX;
+                endY = moveY + endY;
+            }
         })
        
     </script>
