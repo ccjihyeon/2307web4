@@ -21,7 +21,7 @@
         .scroll-contents {
             opacity: 0;
             transform: translateX(-200px);
-            transition: 1500ms;
+            transition: 1200ms;
         }
 
         .scroll-contents.active {
@@ -31,6 +31,9 @@
 
         .this-is-girl {
             margin-bottom: 500px;
+        }
+        .scroll-opacity{
+            opacity: 0;
         }
     </style>
 </head>
@@ -97,29 +100,27 @@
     <div class="content scroll-contents">
         나타난다!
     </div>
-    <img src="dom-hill-nimElTcTNyY-unsplash.jpg" class="this-is-girl" alt="">
+    <img src="/scroll/dom-hill-nimElTcTNyY-unsplash.jpg" class="this-is-girl scroll-opacity" alt="">
+    <img src="/scroll/dom-hill-nimElTcTNyY-unsplash.jpg" class="this-is-girl scroll-opacity" alt="">
+    <img src="/scroll/dom-hill-nimElTcTNyY-unsplash.jpg" class="this-is-girl scroll-opacity" alt="">
+    <img src="/scroll/dom-hill-nimElTcTNyY-unsplash.jpg" class="this-is-girl scroll-opacity" alt="">
     <script>
         const scrollContent = document.getElementsByClassName('scroll-contents');
-        const thisIsGirl = document.querySelector('.this-is-girl');
+        const scrollOpacity = document.getElementsByClassName('scroll-opacity');
 
         window.addEventListener('scroll', (e) => {
 
-            console.log(thisIsGirl.getBoundingClientRect().top - window.innerHeight);
+            for(let i = 0; i < scrollOpacity.length; i++){
 
-            const 좌표 = thisIsGirl.getBoundingClientRect().top - window.innerHeight;
-            const 백분율 = -(좌표 + 300) / 600;
-
-            console.log(백분율);
-
-            thisIsGirl.style.opacity = `${백분율}`;
-
-            // -300에 나타나기 시작해서
-            // -900에 완전히 나타나게 하고싶다!
-
+                const 좌표 = scrollOpacity[i].getBoundingClientRect().top - window.innerHeight;
+                const 백분율 = -(좌표 + window.innerHeight / 3) / (window.innerHeight / 3 * 2); 
+                //윈도우 높이의 3분의1 지점만큼 보이기 시작해서 3분의 2지점만큼오면 확실히 보이게 해주겠다.
+                scrollOpacity[i].style.opacity = `${백분율}`;
+            }
             for (let i = 0; i < scrollContent.length; i++) {
-
-
                 console.log(scrollContent[i].getBoundingClientRect().top - window.innerHeight < 0)
+                //객체.getBoundingClientRect().top : window의 윗부분과 객체 윗부분 사이의 거리
+                //아직 나타나지 않았을때 양수, 지나쳤을때 음수 단위는 px
                 if (scrollContent[i].getBoundingClientRect().top - window.innerHeight < 0) {
                     scrollContent[i].classList.add('active');
                 } else {
@@ -127,6 +128,7 @@
                 }
             }
         })
+        //.getBoundingClientRect().top - window.innerHeight < 0 스크롤 이벤트에 자주 사용함.
 
     </script>
 </body>
