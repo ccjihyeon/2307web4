@@ -9,16 +9,36 @@
     <p class="count-up">0</p>
 
     <script>
-        const goal = 123456;
-        const cuontPlace = document.querySelector('.count-up');
 
-        for(let i = 0; i <= goal; i++){
-            setTimeout(()=>{
-                cuontPlace.innerText = i;
-            }, i / goal * 5000);
+
+        // for(let i = 0; i <= goal; i++){
+        //     setTimeout(()=>{
+        //         cuontPlace.innerText = i;
+        //         console.log(i / goal);
+        //     }, i / goal * 5000);
            
-        }
-    </script>
+        // }
+            function easeOutCubic(x){
+                return 1 - Math.pow(1 - x , 3);
+            }
+            const goal = 123456;
+            const cuontPlace = document.querySelector('.count-up');
+            const countDuration = 5000;
+            const framePerSec = 24;
+
+            const 실행횟수 = countDuration * framePerSec / 1000;
+
+            for(let i = 0; i < 실행횟수; i++){
+
+                const 진행도 = i /(실행횟수 - 1);
+
+                setTimeout(() => {
+                    
+                    cuontPlace.innerText = parseInt(easeOutCubic(진행도) * goal);
+                },(countDuration / 실행횟수)*(i + 1));
+            }            
+            
+        </script>
 
 </body>
 </html>
